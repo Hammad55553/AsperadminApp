@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "789263958500",
+    "project_id": "asperinfotech-2d299",
+    "storage_bucket": "asperinfotech-2d299.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789263958500:android:c1f158dcfa9412999a07f1",
+        "android_client_info": {
+          "package_name": "com.asperinfotech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789263958500-vetqnce0ohqud4v6adt8e3sb0hm6p1fb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCET0VogO25D_irjcw8UrXuxzdNt4hRnlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789263958500-vetqnce0ohqud4v6adt8e3sb0hm6p1fb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
