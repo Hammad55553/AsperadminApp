@@ -7,6 +7,7 @@ export const NotificationManager = () => {
     const isFirstLoadMessages = useRef(true);
     const isFirstLoadApps = useRef(true);
     const isFirstLoadSubscribers = useRef(true);
+    const isFirstLoadJobs = useRef(true);
 
     useEffect(() => {
         const setupNotifications = async () => {
@@ -38,14 +39,11 @@ export const NotificationManager = () => {
                 if (change.type === 'added') {
                     const data = change.doc.data();
                     await notifee.displayNotification({
-                        title: 'New Message Recieved',
+                        title: 'New Message Received 📩',
                         body: `From: ${data.name || 'Unknown'}\n${data.subject || 'No Subject'}`,
                         android: {
                             channelId: 'default',
-                            smallIcon: 'ic_launcher', // Defaults to app icon if not found usually
-                            pressAction: {
-                                id: 'default',
-                            },
+                            pressAction: { id: 'default' },
                         },
                     });
                 }
@@ -66,13 +64,11 @@ export const NotificationManager = () => {
                 if (change.type === 'added') {
                     const data = change.doc.data();
                     await notifee.displayNotification({
-                        title: 'New Job Application',
+                        title: 'New Job Application 📄',
                         body: `${data.fullName || 'Candidate'} applied for ${data.role || 'a position'}`,
                         android: {
                             channelId: 'default',
-                            pressAction: {
-                                id: 'default',
-                            },
+                            pressAction: { id: 'default' },
                         },
                     });
                 }
@@ -93,13 +89,36 @@ export const NotificationManager = () => {
                 if (change.type === 'added') {
                     const data = change.doc.data();
                     await notifee.displayNotification({
-                        title: 'New Subscriber!',
-                        body: `${data.email || 'Someone'} subscribed to the newsletter.`,
+                        title: 'New Subscriber! 🎉',
+                        body: `${data.email || 'Someone'} joined the newsletter.`,
                         android: {
                             channelId: 'default',
-                            pressAction: {
-                                id: 'default',
-                            },
+                            pressAction: { id: 'default' },
+                        },
+                    });
+                }
+            });
+        });
+
+        // ---------------------------
+        // 4. Listen for New Jobs (e.g. posted by another admin/web)
+        // ---------------------------
+        const jobQuery = query(collection(db, 'jobs'));
+        const unsubJob = onSnapshot(jobQuery, (snapshot) => {
+            if (isFirstLoadJobs.current) {
+                isFirstLoadJobs.current = false;
+                return;
+            }
+
+            snapshot.docChanges().forEach(async (change) => {
+                if (change.type === 'added') {
+                    const data = change.doc.data();
+                    await notifee.displayNotification({
+                        title: 'New Job Posted 💼',
+                        body: `Position: ${data.title || 'Job'}\nLocation: ${data.location}`,
+                        android: {
+                            channelId: 'default',
+                            pressAction: { id: 'default' },
                         },
                     });
                 }
@@ -110,6 +129,7 @@ export const NotificationManager = () => {
             unsubMsg();
             unsubApp();
             unsubSub();
+            unsubJob();
         };
     }, []);
 

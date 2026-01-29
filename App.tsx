@@ -7,6 +7,9 @@ import AppNavigator from './src/navigation/AppNavigator';
 import { StatusBar, useColorScheme } from 'react-native';
 import { colors } from './src/theme/colors';
 
+import { toastConfig } from './src/config/toastConfig';
+import Toast from 'react-native-toast-message';
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -20,6 +23,7 @@ function App(): React.JSX.Element {
         <NavigationContainer>
           <AppNavigator />
         </NavigationContainer>
+        <Toast config={toastConfig} />
       </SafeAreaProvider>
     </Provider>
   );
